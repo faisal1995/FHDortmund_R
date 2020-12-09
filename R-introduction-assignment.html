@@ -478,11 +478,11 @@ exp$Country[which.max(exp$c)]</code></pre>
 <p><span class="math display">\[\frac{Summer~Gold - Winter~Gold}{Total~Gold}\]</span></p>
 <p>Only include countries that have won at least 1 gold in both summer and winter.</p>
 <p><em>Script should return a single string value.</em></p>
-<pre class="r"><code>q3Test &lt;- filter(exp, exp$Gold &gt;1 &amp; exp$Gold.1 &gt; 1)
+<pre class="r"><code>q3Test &lt;- filter(exp, exp$Gold &gt;=1 &amp; exp$Gold.1 &gt;= 1)
 
 q3Test &lt;- q3Test %&gt;% mutate(d = abs( Gold - Gold.1) / Gold.2)
 q3Test$Country[which.max(q3Test$d)]</code></pre>
-<pre><code>## [1] &quot;AustraliaÂ (AUS) [AUS] [Z]&quot;</code></pre>
+<pre><code>## [1] &quot;BulgariaÂ (BUL) [H]&quot;</code></pre>
 </div>
 <div id="question-4" class="section level3">
 <h3>Question 4</h3>
@@ -673,13 +673,14 @@ head (census_dftest$STNAME,1)</code></pre>
 <pre class="r"><code>q6 &lt;- filter(census_df, census_df$SUMLEV == 50)
 
 q6 &lt;- aggregate(q6$CENSUS2010POP, by=list(STATES=q6$STNAME), FUN=sum)
-q6 &lt;- arrange(q6,q6$x)
+q6 &lt;- arrange(q6,desc(q6$x))
+
 
 head(q6,3)</code></pre>
-<pre><code>##                 STATES      x
-## 1              Wyoming 563626
-## 2 District of Columbia 601723
-## 3              Vermont 625741</code></pre>
+<pre><code>##       STATES        x
+## 1 California 37253956
+## 2      Texas 25145561
+## 3   New York 19378102</code></pre>
 </div>
 <div id="question-7" class="section level3">
 <h3>Question 7</h3>
@@ -689,9 +690,7 @@ head(q6,3)</code></pre>
 <pre class="r"><code>q7 &lt;- filter(census_df, census_df$SUMLEV == 50)
 
  q7 &lt;- q7 %&gt;% select(4,6,10:15)
- #q7 &lt;- q7 %&gt;% rowwise() %&gt;% mutate(Min = min(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
- 
- # q7 &lt;- q7 %&gt;% rowwise() %&gt;% mutate(max = max(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
+
   
   
  q7 &lt;-  q7 %&gt;% mutate(min = pmap(q7[3:6], min))
@@ -706,13 +705,11 @@ head(q6,3)</code></pre>
 
  
  q7 &lt;- arrange(q7,desc(q7$d))
-q7t &lt;- head(q7,3)
-q7t &lt;- q7t %&gt;% select(11)
+q7t &lt;- head(q7,1)
+q7t &lt;- q7t %&gt;% select(2)
 q7t</code></pre>
-<pre><code>##        d
-## 1 244275
-## 2 219166
-## 3 189731</code></pre>
+<pre><code>##   STNAME
+## 1  Texas</code></pre>
 </div>
 <div id="question-8" class="section level3">
 <h3>Question 8</h3>
