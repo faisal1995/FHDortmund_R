@@ -3,8 +3,8 @@ title: "R introduction assignment"
 author: "Oleksii Yehorchenkov"
 date: "30 11 2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -101,8 +101,10 @@ Only include countries that have won at least 1 gold in both summer and winter.
 
 ```{r}
 
-exp <- exp %>% mutate(d = abs( Gold - Gold.1) / Gold.2)
-exp$Country[which.max(exp$d)]
+q3Test <- filter(exp, exp$Gold >1 & exp$Gold.1 > 1)
+
+q3Test <- q3Test %>% mutate(d = abs( Gold - Gold.1) / Gold.2)
+q3Test$Country[which.max(q3Test$d)]
 
 
 ```
@@ -115,7 +117,7 @@ Write a function that creates a Series called "Points" which is a weighted value
 
 ```{r}
   exp['Points'] = (exp['Gold.2'] * 3 + exp['Silver.2'] * 2 + exp['Bronze.2'] * 1)
-  q4 <- exp %>% select(1,19)
+  q4 <- exp %>% select(1,18)
   q4
 
 
@@ -162,8 +164,9 @@ Only looking at the three most populous counties for each state, what are the th
 *Script should return a vector of string values.*
 
 ```{r}
+q6 <- filter(census_df, census_df$SUMLEV == 50)
 
-q6 <- aggregate(census_df$CENSUS2010POP, by=list(STATES=census_df$STNAME), FUN=sum)
+q6 <- aggregate(q6$CENSUS2010POP, by=list(STATES=q6$STNAME), FUN=sum)
 q6 <- arrange(q6,q6$x)
 
 head(q6,3)
@@ -180,7 +183,10 @@ e.g. If County Population in the 5 year period is 100, 120, 80, 105, 100, 130, t
 *Script should return a single string value.*
 
 ```{r}
- q7 <- census_df %>% select(4,6,10:15)
+
+q7 <- filter(census_df, census_df$SUMLEV == 50)
+
+ q7 <- q7 %>% select(4,6,10:15)
  #q7 <- q7 %>% rowwise() %>% mutate(Min = min(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
  
  # q7 <- q7 %>% rowwise() %>% mutate(max = max(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
@@ -199,6 +205,7 @@ e.g. If County Population in the 5 year period is 100, 120, 80, 105, 100, 130, t
  
  q7 <- arrange(q7,desc(q7$d))
 q7t <- head(q7,3)
+q7t <- q7t %>% select(11)
 q7t
 
 ```

@@ -1,0 +1,585 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R introduction assignment},
+  pdfauthor={Oleksii Yehorchenkov},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{R introduction assignment}
+\author{Oleksii Yehorchenkov}
+\date{30 11 2020}
+
+\begin{document}
+\maketitle
+
+This assignment is based on materials from Coursera course
+\href{https://www.coursera.org/learn/python-data-analysis/home/welcome}{Introduction
+to Data Science in Python}
+
+\hypertarget{part-1}{%
+\subsection{Part 1}\label{part-1}}
+
+\hypertarget{preparing-dataset}{%
+\subsubsection{Preparing dataset}\label{preparing-dataset}}
+
+In the part 1 we are going to work with the olympics dataset
+(olympics.csv), which was derrived from the Wikipedia entry on
+\href{https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table}{All
+Time Olympic Games Medals}
+
+You can download the dataset by the
+\href{https://www.dropbox.com/s/9oayr45v7nj30nv/olympics.csv?dl=0}{link}
+
+At first you should do some basic clearning.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Read the file. File encoding is ``UTF-8''
+\item
+  Give the 1st column name ``Country''
+\item
+  Write a code for naming the next column:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Remove from names ``X.U.2116..'' so ``X.U.2116..Summer'' will be
+  ``Summer''
+\item
+  ``X01..'' change to ``Gold'' so ``X01\ldots1'' will be ``Gold.1''
+\item
+  ``X02..'' and ``X03..'' change to ``Silver'' and ``Bronze''
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Clean the country's names to ``Afghanistan'', ``Algeria'', etc. Remove
+  beginning and end spaces.
+\item
+  Add a new column ``ID'' with country code, for instance ``AFG'',
+  ``ALG'', etc.
+\item
+  Save the tidy dataset to ``olympics'' variable.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(reticulate)}
+\KeywordTok{library}\NormalTok{(plyr)}
+
+\KeywordTok{use_python}\NormalTok{(}\DataTypeTok{python =} \StringTok{"C:/Python38"}\NormalTok{)}
+
+\NormalTok{FinalData <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"olympics.csv"}\NormalTok{,}\DataTypeTok{skip =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(FinalData) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Country"}\NormalTok{, }\StringTok{"Summer"}\NormalTok{, }\StringTok{"Gold"}\NormalTok{, }\StringTok{"Silver"}\NormalTok{, }\StringTok{"Bronze"}\NormalTok{, }\StringTok{"Total"}\NormalTok{, }\StringTok{"Winter"}\NormalTok{, }\StringTok{"Gold.1"}\NormalTok{, }\StringTok{"Silver.1"}\NormalTok{, }\StringTok{"Bronze.1"}\NormalTok{, }\StringTok{"Total.1"}\NormalTok{, }\StringTok{"Games"}\NormalTok{, }\StringTok{"Gold.2"}\NormalTok{, }\StringTok{"Silver.2"}\NormalTok{, }\StringTok{"Bronze.2"}\NormalTok{, }\StringTok{"Combined.total"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-0-example}{%
+\subsubsection{Question 0 (example)}\label{question-0-example}}
+
+What is the first country in df? \emph{Script should return a single
+string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FinalData}\OperatorTok{$}\NormalTok{Country[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "AfghanistanÂ (AFG)"
+\end{verbatim}
+
+\hypertarget{question-1}{%
+\subsubsection{Question 1}\label{question-1}}
+
+Which country has won the most gold medals in summer games?
+
+\emph{Script should return a single string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{exp <-}\StringTok{ }\NormalTok{FinalData[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{147}\NormalTok{),] }
+\NormalTok{exp}\OperatorTok{$}\NormalTok{Country[}\KeywordTok{which.max}\NormalTok{(exp}\OperatorTok{$}\NormalTok{Gold)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "United StatesÂ (USA) [P] [Q] [R] [Z]"
+\end{verbatim}
+
+\hypertarget{question-2}{%
+\subsubsection{Question 2}\label{question-2}}
+
+Which country had the biggest difference between their summer and winter
+gold medal counts?
+
+\emph{Script should return a single string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{exp <-}\StringTok{ }\NormalTok{exp }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{c =}\NormalTok{ Gold }\OperatorTok{-}\StringTok{ }\NormalTok{Gold}\FloatTok{.1}\NormalTok{)}
+\NormalTok{exp}\OperatorTok{$}\NormalTok{Country[}\KeywordTok{which.max}\NormalTok{(exp}\OperatorTok{$}\NormalTok{c)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "United StatesÂ (USA) [P] [Q] [R] [Z]"
+\end{verbatim}
+
+\hypertarget{question-3}{%
+\subsubsection{Question 3}\label{question-3}}
+
+Which country has the biggest difference between their summer gold medal
+counts and winter gold medal counts relative to their total gold medal
+count?
+
+\[\frac{Summer~Gold - Winter~Gold}{Total~Gold}\]
+
+Only include countries that have won at least 1 gold in both summer and
+winter.
+
+\emph{Script should return a single string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{exp <-}\StringTok{ }\NormalTok{exp }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{d =} \KeywordTok{abs}\NormalTok{( Gold }\OperatorTok{-}\StringTok{ }\NormalTok{Gold}\FloatTok{.1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{Gold}\FloatTok{.2}\NormalTok{)}
+\NormalTok{exp}\OperatorTok{$}\NormalTok{Country[}\KeywordTok{which.max}\NormalTok{(exp}\OperatorTok{$}\NormalTok{d)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "AlgeriaÂ (ALG)"
+\end{verbatim}
+
+\hypertarget{question-4}{%
+\subsubsection{Question 4}\label{question-4}}
+
+Write a function that creates a Series called ``Points'' which is a
+weighted value where each gold medal (\texttt{Gold.2}) counts for 3
+points, silver medals (\texttt{Silver.2}) for 2 points, and bronze
+medals (\texttt{Bronze.2}) for 1 point.
+
+\emph{Script should return a data frame of length 146 with 2 columns
+named ``Country and''Points"}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  exp[}\StringTok{'Points'}\NormalTok{] =}\StringTok{ }\NormalTok{(exp[}\StringTok{'Gold.2'}\NormalTok{] }\OperatorTok{*}\StringTok{ }\DecValTok{3} \OperatorTok{+}\StringTok{ }\NormalTok{exp[}\StringTok{'Silver.2'}\NormalTok{] }\OperatorTok{*}\StringTok{ }\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{exp[}\StringTok{'Bronze.2'}\NormalTok{] }\OperatorTok{*}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{  q4 <-}\StringTok{ }\NormalTok{exp }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{19}\NormalTok{)}
+\NormalTok{  q4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                           Country Points
+## 1                              AfghanistanÂ (AFG)      2
+## 2                                  AlgeriaÂ (ALG)     27
+## 3                                ArgentinaÂ (ARG)    130
+## 4                                  ArmeniaÂ (ARM)     16
+## 5                        AustralasiaÂ (ANZ) [ANZ]     22
+## 6                      AustraliaÂ (AUS) [AUS] [Z]    923
+## 7                                  AustriaÂ (AUT)    569
+## 8                               AzerbaijanÂ (AZE)     43
+## 9                                  BahamasÂ (BAH)     24
+## 10                                 BahrainÂ (BRN)      1
+## 11                          BarbadosÂ (BAR) [BAR]      1
+## 12                                 BelarusÂ (BLR)    154
+## 13                                 BelgiumÂ (BEL)    276
+## 14                                 BermudaÂ (BER)      1
+## 15                       BohemiaÂ (BOH) [BOH] [Z]      5
+## 16                                BotswanaÂ (BOT)      2
+## 17                                  BrazilÂ (BRA)    184
+## 18               British West IndiesÂ (BWI) [BWI]      2
+## 19                            BulgariaÂ (BUL) [H]    411
+## 20                                 BurundiÂ (BDI)      3
+## 21                                CameroonÂ (CMR)     12
+## 22                                  CanadaÂ (CAN)    846
+## 23                               ChileÂ (CHI) [I]     24
+## 24                             ChinaÂ (CHN) [CHN]   1120
+## 25                                ColombiaÂ (COL)     29
+## 26                              Costa RicaÂ (CRC)      7
+## 27                       Ivory CoastÂ (CIV) [CIV]      2
+## 28                                 CroatiaÂ (CRO)     67
+## 29                                CubaÂ (CUB) [Z]    420
+## 30                                  CyprusÂ (CYP)      2
+## 31                    Czech RepublicÂ (CZE) [CZE]    134
+## 32                    CzechoslovakiaÂ (TCH) [TCH]    327
+## 33                             DenmarkÂ (DEN) [Z]    335
+## 34                            DjiboutiÂ (DJI) [B]      1
+## 35                      Dominican RepublicÂ (DOM)     14
+## 36                                 EcuadorÂ (ECU)      5
+## 37                         EgyptÂ (EGY) [EGY] [Z]     49
+## 38                                 EritreaÂ (ERI)      1
+## 39                                 EstoniaÂ (EST)     77
+## 40                                EthiopiaÂ (ETH)     94
+## 41                                 FinlandÂ (FIN)    895
+## 42                      FranceÂ (FRA) [O] [P] [Z]   1500
+## 43                                   GabonÂ (GAB)      2
+## 44                                 GeorgiaÂ (GEO)     42
+## 45                       GermanyÂ (GER) [GER] [Z]   1546
+## 46            United Team of GermanyÂ (EUA) [EUA]    269
+## 47                      East GermanyÂ (GDR) [GDR]   1068
+## 48                      West GermanyÂ (FRG) [FRG]    459
+## 49                             GhanaÂ (GHA) [GHA]      5
+## 50                 Great BritainÂ (GBR) [GBR] [Z]   1574
+## 51                              GreeceÂ (GRE) [Z]    213
+## 52                                 GrenadaÂ (GRN)      3
+## 53                               GuatemalaÂ (GUA)      2
+## 54                            GuyanaÂ (GUY) [GUY]      1
+## 55                               HaitiÂ (HAI) [J]      3
+## 56                         Hong KongÂ (HKG) [HKG]      6
+## 57                                 HungaryÂ (HUN)    962
+## 58                                 IcelandÂ (ISL)      6
+## 59                               IndiaÂ (IND) [F]     50
+## 60                               IndonesiaÂ (INA)     49
+## 61                                IranÂ (IRI) [K]    110
+## 62                                    IraqÂ (IRQ)      1
+## 63                                 IrelandÂ (IRL)     55
+## 64                                  IsraelÂ (ISR)     10
+## 65                           ItalyÂ (ITA) [M] [S]   1333
+## 66                           JamaicaÂ (JAM) [JAM]    131
+## 67                                   JapanÂ (JPN)    866
+## 68                              KazakhstanÂ (KAZ)    113
+## 69                                   KenyaÂ (KEN)    168
+## 70                             North KoreaÂ (PRK)     90
+## 71                             South KoreaÂ (KOR)    609
+## 72                                  KuwaitÂ (KUW)      2
+## 73                              KyrgyzstanÂ (KGZ)      4
+## 74                                  LatviaÂ (LAT)     47
+## 75                                 LebanonÂ (LIB)      6
+## 76                           LiechtensteinÂ (LIE)     15
+## 77                               LithuaniaÂ (LTU)     38
+## 78                          LuxembourgÂ (LUX) [O]      9
+## 79                               MacedoniaÂ (MKD)      1
+## 80                          MalaysiaÂ (MAS) [MAS]      9
+## 81                               MauritiusÂ (MRI)      1
+## 82                                  MexicoÂ (MEX)    109
+## 83                                 MoldovaÂ (MDA)      9
+## 84                                MongoliaÂ (MGL)     37
+## 85                              MontenegroÂ (MNE)      2
+## 86                                 MoroccoÂ (MAR)     39
+## 87                              MozambiqueÂ (MOZ)      4
+## 88                                 NamibiaÂ (NAM)      8
+## 89                         NetherlandsÂ (NED) [Z]    727
+## 90          Netherlands AntillesÂ (AHO) [AHO] [I]      2
+## 91                       New ZealandÂ (NZL) [NZL]    203
+## 92                                   NigerÂ (NIG)      1
+## 93                                 NigeriaÂ (NGR)     37
+## 94                              NorwayÂ (NOR) [Q]    985
+## 95                                PakistanÂ (PAK)     19
+## 96                                  PanamaÂ (PAN)      5
+## 97                                ParaguayÂ (PAR)      2
+## 98                                PeruÂ (PER) [L]      9
+## 99                             PhilippinesÂ (PHI)     11
+## 100                                 PolandÂ (POL)    520
+## 101                               PortugalÂ (POR)     39
+## 102                            Puerto RicoÂ (PUR)     10
+## 103                                  QatarÂ (QAT)      4
+## 104                                RomaniaÂ (ROU)    572
+## 105                           RussiaÂ (RUS) [RUS]   1042
+## 106                   Russian EmpireÂ (RU1) [RU1]     14
+## 107                     Soviet UnionÂ (URS) [URS]   2526
+## 108                     Unified TeamÂ (EUN) [EUN]    287
+## 109                           Saudi ArabiaÂ (KSA)      4
+## 110                                SenegalÂ (SEN)      2
+## 111                           SerbiaÂ (SRB) [SRB]     11
+## 112            Serbia and MontenegroÂ (SCG) [SCG]     17
+## 113                              SingaporeÂ (SIN)      6
+## 114                         SlovakiaÂ (SVK) [SVK]     58
+## 115                               SloveniaÂ (SLO)     56
+## 116                           South AfricaÂ (RSA)    148
+## 117                              SpainÂ (ESP) [Z]    268
+## 118                        Sri LankaÂ (SRI) [SRI]      4
+## 119                                  SudanÂ (SUD)      2
+## 120                           SurinameÂ (SUR) [E]      4
+## 121                             SwedenÂ (SWE) [Z]   1217
+## 122                            SwitzerlandÂ (SUI)    630
+## 123                                  SyriaÂ (SYR)      6
+## 124            Chinese TaipeiÂ (TPE) [TPE] [TPE2]     32
+## 125                             TajikistanÂ (TJK)      4
+## 126                         TanzaniaÂ (TAN) [TAN]      4
+## 127                               ThailandÂ (THA)     44
+## 128                                   TogoÂ (TOG)      1
+## 129                                  TongaÂ (TGA)      2
+## 130              Trinidad and TobagoÂ (TRI) [TRI]     27
+## 131                                TunisiaÂ (TUN)     19
+## 132                                 TurkeyÂ (TUR)    191
+## 133                                 UgandaÂ (UGA)     14
+## 134                                UkraineÂ (UKR)    220
+## 135                   United Arab EmiratesÂ (UAE)      3
+## 136          United StatesÂ (USA) [P] [Q] [R] [Z]   5684
+## 137                                UruguayÂ (URU)     16
+## 138                             UzbekistanÂ (UZB)     38
+## 139                              VenezuelaÂ (VEN)     18
+## 140                                VietnamÂ (VIE)      4
+## 141                         Virgin IslandsÂ (ISV)      2
+## 142                       YugoslaviaÂ (YUG) [YUG]    171
+## 143 Independent Olympic ParticipantsÂ (IOP) [IOP]      4
+## 144                           ZambiaÂ (ZAM) [ZAM]      3
+## 145                         ZimbabweÂ (ZIM) [ZIM]     18
+## 146                       Mixed teamÂ (ZZX) [ZZX]     38
+\end{verbatim}
+
+\hypertarget{part-2}{%
+\subsection{Part 2}\label{part-2}}
+
+For the next set of questions, we will be using census data from the
+United States Census Bureau. Counties are political and geographic
+subdivisions of states in the United States. This dataset contains
+population data for counties and states in the US from 2010 to 2015.
+\href{https://www.dropbox.com/s/a0c2fdkaxokk2ys/CO-EST2015-alldata.pdf?dl=0}{See
+this document} for a description of the variable names.
+
+The census dataset (census.csv) should be loaded as census\_df. Answer
+questions using this as appropriate.
+
+\hypertarget{reading-data}{%
+\subsubsection{Reading data}\label{reading-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{census_df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"census.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-5}{%
+\subsubsection{Question 5}\label{question-5}}
+
+Which state has the most counties in it? (hint: consider the sumlevel
+key carefully! You'll need this for future questions too\ldots)
+
+\emph{Script should return a single string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q5 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(census_df}\OperatorTok{$}\NormalTok{COUNTY, }\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{STATES=}\NormalTok{census_df}\OperatorTok{$}\NormalTok{STATE), }\DataTypeTok{FUN=}\NormalTok{sum)}
+
+\NormalTok{q5 <-}\StringTok{ }\KeywordTok{arrange}\NormalTok{(q5,}\KeywordTok{desc}\NormalTok{(q5}\OperatorTok{$}\NormalTok{x))}
+
+
+\NormalTok{q5t <-}\StringTok{ }\KeywordTok{head}\NormalTok{(q5,}\DecValTok{1}\NormalTok{)}
+
+
+
+\NormalTok{census_dftest <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(census_df, STATE }\OperatorTok{==}\StringTok{ }\NormalTok{q5t}\OperatorTok{$}\NormalTok{STATES)}
+
+\KeywordTok{head}\NormalTok{ (census_dftest}\OperatorTok{$}\NormalTok{STNAME,}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Texas"
+\end{verbatim}
+
+\hypertarget{question-6}{%
+\subsubsection{Question 6}\label{question-6}}
+
+Only looking at the three most populous counties for each state, what
+are the three most populous states (in order of highest population to
+lowest population)? Use \texttt{CENSUS2010POP}.
+
+\emph{Script should return a vector of string values.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q6 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(census_df}\OperatorTok{$}\NormalTok{CENSUS2010POP, }\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{STATES=}\NormalTok{census_df}\OperatorTok{$}\NormalTok{STNAME), }\DataTypeTok{FUN=}\NormalTok{sum)}
+\NormalTok{q6 <-}\StringTok{ }\KeywordTok{arrange}\NormalTok{(q6,q6}\OperatorTok{$}\NormalTok{x)}
+
+\KeywordTok{head}\NormalTok{(q6,}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 STATES       x
+## 1              Wyoming 1127252
+## 2 District of Columbia 1203446
+## 3              Vermont 1251482
+\end{verbatim}
+
+\hypertarget{question-7}{%
+\subsubsection{Question 7}\label{question-7}}
+
+Which county has had the largest absolute change in population within
+the period 2010-2015? (Hint: population values are stored in columns
+POPESTIMATE2010 through POPESTIMATE2015, you need to consider all six
+columns.)
+
+e.g.~If County Population in the 5 year period is 100, 120, 80, 105,
+100, 130, then its largest change in the period would be
+\textbar130-80\textbar{} = 50.
+
+\emph{Script should return a single string value.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ q7 <-}\StringTok{ }\NormalTok{census_df }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{10}\OperatorTok{:}\DecValTok{15}\NormalTok{)}
+ \CommentTok{#q7 <- q7 %>% rowwise() %>% mutate(Min = min(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))}
+ 
+ \CommentTok{# q7 <- q7 %>% rowwise() %>% mutate(max = max(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))}
+  
+  
+\NormalTok{ q7 <-}\StringTok{  }\NormalTok{q7 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{min =} \KeywordTok{pmap}\NormalTok{(q7[}\DecValTok{3}\OperatorTok{:}\DecValTok{6}\NormalTok{], min))}
+
+\NormalTok{ q7 <-}\StringTok{  }\NormalTok{q7 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{max =} \KeywordTok{pmap}\NormalTok{(q7[}\DecValTok{3}\OperatorTok{:}\DecValTok{6}\NormalTok{], max))}
+ 
+\NormalTok{  q7}\OperatorTok{$}\NormalTok{max <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(q7}\OperatorTok{$}\NormalTok{max)}
+\NormalTok{  q7}\OperatorTok{$}\NormalTok{min <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(q7}\OperatorTok{$}\NormalTok{min)}
+ 
+\NormalTok{ q7 <-}\StringTok{ }\NormalTok{q7 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{d =} \KeywordTok{abs}\NormalTok{( max }\OperatorTok{-}\StringTok{ }\NormalTok{min))}
+ 
+
+ 
+\NormalTok{ q7 <-}\StringTok{ }\KeywordTok{arrange}\NormalTok{(q7,}\KeywordTok{desc}\NormalTok{(q7}\OperatorTok{$}\NormalTok{d))}
+\NormalTok{q7t <-}\StringTok{ }\KeywordTok{head}\NormalTok{(q7,}\DecValTok{3}\NormalTok{)}
+\NormalTok{q7t}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   STATE     STNAME POPESTIMATE2010 POPESTIMATE2011 POPESTIMATE2012
+## 1    48      Texas        25244363        25654464        26089741
+## 2     6 California        37334079        37700034        38056055
+## 3    12    Florida        18849890        19105533        19352021
+##   POPESTIMATE2013 POPESTIMATE2014 POPESTIMATE2015      min      max       d
+## 1        26500674        26979078        27469114 25244363 26500674 1256311
+## 2        38414128        38792291        39144818 37334079 38414128 1080049
+## 3        19594467        19905569        20271272 18849890 19594467  744577
+\end{verbatim}
+
+\hypertarget{question-8}{%
+\subsubsection{Question 8}\label{question-8}}
+
+In this datafile, the United States is broken up into four regions using
+the ``REGION'' column.
+
+Create a query that finds the counties that belong to regions 1 or 2,
+whose name starts with `Washington', and whose POPESTIMATE2015 was
+greater than their POPESTIMATE 2014.
+
+\emph{Script function should return a 5x2 DataFrame with the columns
+``STNAME'', ``CTYNAME''.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q8 <-}\StringTok{ }\NormalTok{census_df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(REGION }\OperatorTok{%in%}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{) }\OperatorTok{&}\StringTok{ }\NormalTok{POPESTIMATE2015 }\OperatorTok{>}\StringTok{ }\NormalTok{POPESTIMATE2014 }\OperatorTok{&}\StringTok{  }\KeywordTok{str_detect}\NormalTok{(CTYNAME, }\StringTok{"Washington"}\NormalTok{) )}
+
+\NormalTok{ q8t <-}\StringTok{ }\NormalTok{q8 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{)}
+\NormalTok{q8t}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         STNAME           CTYNAME
+## 1         Iowa Washington County
+## 2    Minnesota Washington County
+## 3 Pennsylvania Washington County
+## 4 Rhode Island Washington County
+## 5    Wisconsin Washington County
+\end{verbatim}
+
+\end{document}

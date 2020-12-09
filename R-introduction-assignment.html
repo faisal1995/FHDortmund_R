@@ -478,16 +478,18 @@ exp$Country[which.max(exp$c)]</code></pre>
 <p><span class="math display">\[\frac{Summer~Gold - Winter~Gold}{Total~Gold}\]</span></p>
 <p>Only include countries that have won at least 1 gold in both summer and winter.</p>
 <p><em>Script should return a single string value.</em></p>
-<pre class="r"><code>exp &lt;- exp %&gt;% mutate(d = abs( Gold - Gold.1) / Gold.2)
-exp$Country[which.max(exp$d)]</code></pre>
-<pre><code>## [1] &quot;AlgeriaÂ (ALG)&quot;</code></pre>
+<pre class="r"><code>q3Test &lt;- filter(exp, exp$Gold &gt;1 &amp; exp$Gold.1 &gt; 1)
+
+q3Test &lt;- q3Test %&gt;% mutate(d = abs( Gold - Gold.1) / Gold.2)
+q3Test$Country[which.max(q3Test$d)]</code></pre>
+<pre><code>## [1] &quot;AustraliaÂ (AUS) [AUS] [Z]&quot;</code></pre>
 </div>
 <div id="question-4" class="section level3">
 <h3>Question 4</h3>
 <p>Write a function that creates a Series called “Points” which is a weighted value where each gold medal (<code>Gold.2</code>) counts for 3 points, silver medals (<code>Silver.2</code>) for 2 points, and bronze medals (<code>Bronze.2</code>) for 1 point.</p>
 <p><em>Script should return a data frame of length 146 with 2 columns named “Country and”Points&quot;</em></p>
 <pre class="r"><code>  exp[&#39;Points&#39;] = (exp[&#39;Gold.2&#39;] * 3 + exp[&#39;Silver.2&#39;] * 2 + exp[&#39;Bronze.2&#39;] * 1)
-  q4 &lt;- exp %&gt;% select(1,19)
+  q4 &lt;- exp %&gt;% select(1,18)
   q4</code></pre>
 <pre><code>##                                           Country Points
 ## 1                              AfghanistanÂ (AFG)      2
@@ -668,21 +670,25 @@ head (census_dftest$STNAME,1)</code></pre>
 <h3>Question 6</h3>
 <p>Only looking at the three most populous counties for each state, what are the three most populous states (in order of highest population to lowest population)? Use <code>CENSUS2010POP</code>.</p>
 <p><em>Script should return a vector of string values.</em></p>
-<pre class="r"><code>q6 &lt;- aggregate(census_df$CENSUS2010POP, by=list(STATES=census_df$STNAME), FUN=sum)
+<pre class="r"><code>q6 &lt;- filter(census_df, census_df$SUMLEV == 50)
+
+q6 &lt;- aggregate(q6$CENSUS2010POP, by=list(STATES=q6$STNAME), FUN=sum)
 q6 &lt;- arrange(q6,q6$x)
 
 head(q6,3)</code></pre>
-<pre><code>##                 STATES       x
-## 1              Wyoming 1127252
-## 2 District of Columbia 1203446
-## 3              Vermont 1251482</code></pre>
+<pre><code>##                 STATES      x
+## 1              Wyoming 563626
+## 2 District of Columbia 601723
+## 3              Vermont 625741</code></pre>
 </div>
 <div id="question-7" class="section level3">
 <h3>Question 7</h3>
 <p>Which county has had the largest absolute change in population within the period 2010-2015? (Hint: population values are stored in columns POPESTIMATE2010 through POPESTIMATE2015, you need to consider all six columns.)</p>
 <p>e.g. If County Population in the 5 year period is 100, 120, 80, 105, 100, 130, then its largest change in the period would be |130-80| = 50.</p>
 <p><em>Script should return a single string value.</em></p>
-<pre class="r"><code> q7 &lt;- census_df %&gt;% select(4,6,10:15)
+<pre class="r"><code>q7 &lt;- filter(census_df, census_df$SUMLEV == 50)
+
+ q7 &lt;- q7 %&gt;% select(4,6,10:15)
  #q7 &lt;- q7 %&gt;% rowwise() %&gt;% mutate(Min = min(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
  
  # q7 &lt;- q7 %&gt;% rowwise() %&gt;% mutate(max = max(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
@@ -701,15 +707,12 @@ head(q6,3)</code></pre>
  
  q7 &lt;- arrange(q7,desc(q7$d))
 q7t &lt;- head(q7,3)
+q7t &lt;- q7t %&gt;% select(11)
 q7t</code></pre>
-<pre><code>##   STATE     STNAME POPESTIMATE2010 POPESTIMATE2011 POPESTIMATE2012
-## 1    48      Texas        25244363        25654464        26089741
-## 2     6 California        37334079        37700034        38056055
-## 3    12    Florida        18849890        19105533        19352021
-##   POPESTIMATE2013 POPESTIMATE2014 POPESTIMATE2015      min      max       d
-## 1        26500674        26979078        27469114 25244363 26500674 1256311
-## 2        38414128        38792291        39144818 37334079 38414128 1080049
-## 3        19594467        19905569        20271272 18849890 19594467  744577</code></pre>
+<pre><code>##        d
+## 1 244275
+## 2 219166
+## 3 189731</code></pre>
 </div>
 <div id="question-8" class="section level3">
 <h3>Question 8</h3>
