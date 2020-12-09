@@ -101,7 +101,7 @@ Only include countries that have won at least 1 gold in both summer and winter.
 
 ```{r}
 
-q3Test <- filter(exp, exp$Gold >1 & exp$Gold.1 > 1)
+q3Test <- filter(exp, exp$Gold >=1 & exp$Gold.1 >= 1)
 
 q3Test <- q3Test %>% mutate(d = abs( Gold - Gold.1) / Gold.2)
 q3Test$Country[which.max(q3Test$d)]
@@ -167,7 +167,8 @@ Only looking at the three most populous counties for each state, what are the th
 q6 <- filter(census_df, census_df$SUMLEV == 50)
 
 q6 <- aggregate(q6$CENSUS2010POP, by=list(STATES=q6$STNAME), FUN=sum)
-q6 <- arrange(q6,q6$x)
+q6 <- arrange(q6,desc(q6$x))
+
 
 head(q6,3)
 
@@ -187,9 +188,7 @@ e.g. If County Population in the 5 year period is 100, 120, 80, 105, 100, 130, t
 q7 <- filter(census_df, census_df$SUMLEV == 50)
 
  q7 <- q7 %>% select(4,6,10:15)
- #q7 <- q7 %>% rowwise() %>% mutate(Min = min(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
- 
- # q7 <- q7 %>% rowwise() %>% mutate(max = max(q7$POPESTIMATE2010, q7$POPESTIMATE2011, q7$POPESTIMATE2012,q7$POPESTIMATE2013,q7$POPESTIMATE2014))
+
   
   
  q7 <-  q7 %>% mutate(min = pmap(q7[3:6], min))
@@ -204,8 +203,8 @@ q7 <- filter(census_df, census_df$SUMLEV == 50)
 
  
  q7 <- arrange(q7,desc(q7$d))
-q7t <- head(q7,3)
-q7t <- q7t %>% select(11)
+q7t <- head(q7,1)
+q7t <- q7t %>% select(2)
 q7t
 
 ```
